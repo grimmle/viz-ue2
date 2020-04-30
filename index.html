@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="p5.js"></script>
+    <script src="main.js"></script>
+    <script src="https://kit.fontawesome.com/1d645dc765.js" crossorigin="anonymous"></script>
+    <title>viz ue2</title>
+  </head>
+  <body>
+    <div class="content">
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div class="landing">
+        <h1>Test der präattentiven Wahrnehmung</h1>
+        <p>
+          In den folgenden Tests werden zufällig platzierte Symbole für einen Bruchteil einer Sekunde angezeigt, darunter ist jeweils ein einzigartiges. Die Anzeigedauer variiert bei jedem Test. Kannst du das einzigartige Symbol finden?
+        </p>
+        <button type="button" id="start" onclick="start()">Start <i class="fas fa-arrow-right"></i></button>
+      </div>
+
+      <div class="evaluation hide">
+        <h1>Auswertung</h1>
+        <h3>1. Testreihe</h3>
+        <p>Finde das rote Quadrat. Enthält wenige Distraktoren mit einer hohen Varianz.</p>
+
+        <h3>2. Testreihe</h3>
+        <p>Finde den Kreis. Enthält viele Distraktoren mit einer geringen Varianz.</p>
+
+        <h3>3. Testreihe</h3>
+        <p>Finde den blauen Kreis mit roter Umrandung. Enthält viele Distrakoren mit zusammengesetzten Eigenschaften.</p>
+
+        <table>
+          <tr>
+            <td></td>
+            <td>100ms</td>
+            <td>250ms</td>
+            <td>500ms</td>
+            <td>1000ms</td>
+          </tr>
+          <tr>
+            <td>1. Testreihe</td>
+            <td id="1.1"></td>
+            <td id="1.2"></td>
+            <td id="1.3"></td>
+            <td id="1.4"></td>
+          </tr>
+          <tr>
+            <td>2. Testreihe</td>
+            <td id="2.1"></td>
+            <td id="2.2"></td>
+            <td id="2.3"></td>
+            <td id="2.4"></td>
+          </tr>
+          <tr>
+            <td>3. Testreihe</td>
+            <td id="3.1"></td>
+            <td id="3.2"></td>
+            <td id="3.3"></td>
+            <td id="3.4"></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="container" class="hide"></div>
+
+      <div id="buttons">
+        <div id="answer" class="hide">
+          <button type="button" id="yes" onclick="toggleAnswer(this)">Ja</button>
+          <button type="button" id="no" onclick="toggleAnswer(this)">Nein</button>
+        </div>
+        <button type="button" class="hide" id="next" onclick="nextTest()">Weiter
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

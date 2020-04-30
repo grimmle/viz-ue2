@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+canvas {
+  display: block;
+  margin: auto auto;
+  border: 5px solid black;
+}
+
+#container {
+  padding-bottom: 20px;
+}
+
+.landing {
+  text-align: center;
+}
+
+.evaluation {
+  text-align: left;
+}
+
+.content {
+  display: block;
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.hide {
+  display: none;
+}
+
+h3 {
+  margin-top: 10px;
+  margin-bottom: 0
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+tr {
+  padding: 0;
+  margin: 0;
+}
+
+td {
+  width: 125px;
+  height: 40px;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+}
+
+button {
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: .5em;
+  border: 1px solid black;
+  border-bottom-width: 5px;
+  font-size: 1em;
+  font-weight: 700;
+  color: rgba(1,1,1,0.8);
+  background-color: lightgrey;
+  transition: all .2s ease-out;
+  cursor: pointer;
+}
+
+#start {
+  background-color: #06d6a0;
+}
+
+#no {
+  width: 100px;
+  background-color: white;
+  border: 2px solid #ef476f;
+}
+#no:hover{
+  color: white;
+  background-color: #ef476f;
+}
+#no.selected {
+  color: white;
+  background-color: #ef476f
+}
+
+#yes {
+  width: 100px;
+  background-color: white;
+  border: 2px solid #06d6a0;
+}
+#yes:hover {
+  color: white;
+  background-color: #06d6a0;
+}
+#yes.selected {
+  color: white;
+  background-color: #06d6a0
+}
+
+button:hover {
+  border-bottom-width: 1px;;
+  transform: translateY(2px);
+}
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+}
