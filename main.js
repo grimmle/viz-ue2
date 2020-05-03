@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let next = document.getElementById('next');
 });
 
-let testTemplates = [{
-    //TEST 1 - wenig Distrakoren, viel Varianz
+let testTemplates = [
+  {
     id: "1.1",
     target: {
       shape: "rect",
@@ -81,7 +81,6 @@ let testTemplates = [{
     question: "Hast du ein rotes Quadrat gesehen?"
   },
   {
-    //TEST 2 - viele Distraktoren, wenig Varianz
     id: "2.1",
     target: {
       shape: "circle",
@@ -117,7 +116,6 @@ let testTemplates = [{
     question: "Hast du einen Kreis gesehen?"
   },
   {
-    //TEST 3 - zusammengesetzte Eigenschaften
     id: "3.1",
     target: {
       shape: "circle",
@@ -159,6 +157,7 @@ let testTemplates = [{
   }
 ]
 
+// CREATE MULTIPLE TESTS FROM TEMPLATES
 let tests = [];
 for (var i = 0; i < testTemplates.length; i++) {
   let t = JSON.parse(JSON.stringify(testTemplates[i]))
@@ -171,6 +170,8 @@ for (var i = 0; i < testTemplates.length; i++) {
   }
 }
 
+// SHUFFLE TESTS
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array#2450976
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
@@ -180,7 +181,6 @@ function shuffleArray(array) {
   }
 }
 shuffleArray(tests);
-console.log(tests);
 
 let canvasWidth = 600
 let canvasHeight = 500
@@ -219,6 +219,7 @@ function startSketch(n) {
         }
         overlapping = false;
 
+        // CHECK OVERLAPPING
         for (let i = 0; i < shapes.length; i++) {
           let other = shapes[i];
           let d = p.dist(shape.x, shape.y, other.x, other.y);
@@ -240,7 +241,8 @@ function startSketch(n) {
 
       for (let i = 0; i < shapes.length; i++) {
         if (i == shapes.length - 1) {
-          //DRAW TARGET SHAPE
+          // LAST ITERATION
+          // DRAW TARGET SHAPE
           p.fill(test.target.color);
           p.strokeWeight(4);
           if (test.target.stroke) p.stroke(test.target.stroke);
@@ -256,7 +258,7 @@ function startSketch(n) {
           break;
         }
 
-        //DRAW DISTRACTOR SHAPES
+        // DRAW DISTRACTOR SHAPE
         let dis = test.distractors[shapes[i].index];
         p.fill(dis.color);
         p.strokeWeight(4);
@@ -318,9 +320,7 @@ function nextTest() {
     results = JSON.parse(window.localStorage.getItem("results"));
   }
   let t = tests[currentPage].id;
-  let a = document.getElementsByClassName("selected")[0].id;
-  results[t] = a
-  console.log(results);
+  results[t] = document.getElementsByClassName("selected")[0].id;
   window.localStorage.setItem("results", JSON.stringify(results));
 
   this.yes.classList.remove("selected");
@@ -347,16 +347,10 @@ function showEvaluation() {
   // FILL TABLE
   let results = JSON.parse(window.localStorage.getItem("results"));
   console.log(results)
-  document.getElementById("1.1").innerHTML = results["1.1"];
-  document.getElementById("1.2").innerHTML = results["1.2"];
-  document.getElementById("1.3").innerHTML = results["1.3"];
-  document.getElementById("1.4").innerHTML = results["1.4"];
-  document.getElementById("2.1").innerHTML = results["2.1"];
-  document.getElementById("2.2").innerHTML = results["2.2"];
-  document.getElementById("2.3").innerHTML = results["2.3"];
-  document.getElementById("2.4").innerHTML = results["2.4"];
-  document.getElementById("3.1").innerHTML = results["3.1"];
-  document.getElementById("3.2").innerHTML = results["3.2"];
-  document.getElementById("3.3").innerHTML = results["3.3"];
-  document.getElementById("3.4").innerHTML = results["3.4"];
+
+  Object.keys(results).forEach(function(key,index) {
+    let td = document.getElementById(key)
+    if(results[key] == "yes") td.classList.add("yes")
+    else td.classList.add("no")
+});
 }
