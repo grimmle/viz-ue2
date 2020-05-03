@@ -348,9 +348,8 @@ function showEvaluation() {
   let results = JSON.parse(window.localStorage.getItem("results"));
   console.log(results)
 
-  Object.keys(results).forEach(function(key,index) {
+  Object.keys(results).forEach(function(key, index) {
     let td = document.getElementById(key)
-    if(results[key] == "yes") td.classList.add("yes")
-    else td.classList.add("no")
-});
+    td.classList.add(results[key])
+  });
 }
