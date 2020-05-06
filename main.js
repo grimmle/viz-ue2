@@ -207,8 +207,6 @@ function startSketch(n) {
             w: test.target.width,
             h: test.target.height,
           }
-          console.log(shape.x)
-          console.log(shape.y)
         } else {
           // DISTRACTOR SHAPE
           let j = Math.floor(p.random(test.distractors.length));
