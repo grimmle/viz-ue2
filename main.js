@@ -202,18 +202,20 @@ function startSketch(n) {
         if (test.distractorCount - shapes.length == 1) {
           // TARGET SHAPE
           var shape = {
-            x: (p.random(canvasWidth - test.target.width) + test.target.width/2),
-            y: (p.random(canvasHeight - test.target.height) + test.target.height/2),
+            x: (p.random(canvasWidth) + 25),
+            y: (p.random(canvasHeight) + 25),
             w: test.target.width,
             h: test.target.height,
           }
+          console.log(shape.x)
+          console.log(shape.y)
         } else {
           // DISTRACTOR SHAPE
           let j = Math.floor(p.random(test.distractors.length));
           var shape = {
             index: j,
-            x: (p.random(canvasWidth - test.distractors[j].width) + test.distractors[j].width/2),
-            y: (p.random(canvasHeight - test.distractors[j].height) + test.distractors[j].height/2),
+            x: (p.random(canvasWidth) + 25),
+            y: (p.random(canvasHeight) + 25),
             w: test.distractors[j].width,
             h: test.distractors[j].height,
           }
