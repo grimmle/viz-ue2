@@ -1,5 +1,6 @@
 let myp5, startButton, answer, yes, no, next, eval;
 let currentPage = 0;
+let timer = 3;
 
 document.addEventListener("DOMContentLoaded", function(event) {
   let startButton = document.getElementById('start');
@@ -9,8 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let next = document.getElementById('next');
 });
 
-let testTemplates = [
-  {
+let testTemplates = [{
     id: "1.1",
     target: {
       shape: "rect",
@@ -124,7 +124,7 @@ let testTemplates = [
       width: 40,
       height: 40
     },
-    distractorCount: 30,
+    distractorCount: 25,
     distractors: [{
         shape: "circle",
         color: '#ff006e',
@@ -162,10 +162,12 @@ let tests = [];
 for (var i = 0; i < testTemplates.length; i++) {
   let t = JSON.parse(JSON.stringify(testTemplates[i]))
   tests.push(t);
-  for (var j = 1; j < 4; j++) {
+  for (var j = 1; j < 5; j++) {
     let t = JSON.parse(JSON.stringify(testTemplates[i]))
     t.id = (i + 1) + "." + (j + 1)
-    t.timeout = (j == 3) ? 1000 : 250 * j;
+    t.timeout = 250 * j
+    if(j == 3) t.timeout = 1000
+    if(j == 4) t.timeout = 2000
     tests.push(t);
   }
 }
@@ -190,7 +192,6 @@ function startSketch(n) {
   let sketch = function(p) {
     p.setup = function() {
       let test = tests[n];
-      console.log(test);
 
       let overlapping = false;
       let protection = 0;
@@ -201,8 +202,8 @@ function startSketch(n) {
         if (test.distractorCount - shapes.length == 1) {
           // TARGET SHAPE
           var shape = {
-            x: p.random(canvasWidth),
-            y: p.random(canvasHeight),
+            x: (p.random(canvasWidth - test.target.width) + test.target.width/2),
+            y: (p.random(canvasHeight - test.target.height) + test.target.height/2),
             w: test.target.width,
             h: test.target.height,
           }
@@ -211,8 +212,8 @@ function startSketch(n) {
           let j = Math.floor(p.random(test.distractors.length));
           var shape = {
             index: j,
-            x: p.random(canvasWidth),
-            y: p.random(canvasHeight),
+            x: (p.random(canvasWidth - test.distractors[j].width) + test.distractors[j].width/2),
+            y: (p.random(canvasHeight - test.distractors[j].height) + test.distractors[j].height/2),
             w: test.distractors[j].width,
             h: test.distractors[j].height,
           }
@@ -281,6 +282,28 @@ function startSketch(n) {
   myp5 = new p5(sketch, 'container');
 }
 
+function showCountdown() {
+  let sketch = function(p) {
+    p.setup = function() {
+      p.createCanvas(canvasWidth + 100, canvasHeight + 100);
+    }
+    p.draw = function() {
+      p.textAlign(p.CENTER, p.CENTER);
+      p.textSize(200);
+      p.text(timer, 350, 300);
+      if (p.frameCount % 60 == 0 && timer > 0) {
+        p.clear();
+        timer --
+      }
+      if (timer == 0) {
+        myp5.remove();
+        startSketch(0);
+      }
+    }
+  };
+  myp5 = new p5(sketch, 'container');
+}
+
 function toggleAnswer(el) {
   if (el.classList.contains("selected")) {
     el.classList.remove("selected");
@@ -298,7 +321,8 @@ function start() {
   document.getElementById('container').classList.remove('hide');
   document.getElementsByClassName('landing')[0].classList.add('hide');
   this.next.classList.add('hide');
-  startSketch(0);
+  showCountdown();
+  //startSketch(0);
 }
 
 function clearCanvas() {
@@ -346,7 +370,6 @@ function showEvaluation() {
 
   // FILL TABLE
   let results = JSON.parse(window.localStorage.getItem("results"));
-  console.log(results)
 
   Object.keys(results).forEach(function(key, index) {
     let td = document.getElementById(key)
